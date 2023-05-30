@@ -27,4 +27,4 @@ jobs:
         password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Push Docker image to Azure Container Registry
-      run: docker push testcontainerregistry4ss/sample-flask-1:latest
+      run: docker push testcontainerregistry4ss.azurecr.io/sample-flask-1:latest
