@@ -20,11 +20,7 @@ jobs:
       run: docker tag sample-flask-1 testcontainerregistry4ss.azurecr.io/sample-flask-1:latest
 
     - name: Login to Azure Container Registry
-      uses: azure/docker-login@v1 testcontainerregistry4ss.azurecr.io
-      with:
-        login-server: testcontainerregistry4ss
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
+      run: docker login testcontainerregistry4ss.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
 
     - name: Push Docker image to Azure Container Registry
-      run: docker push testcontainerregistry4ss.azurecr.io/sample-flask-1:latest
+      run: docker push testcontainerregistry4ss.azurecr.io/dynopsbackend:latest
