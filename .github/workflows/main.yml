@@ -13,6 +13,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Login to Azure Container Registry (ACR)
+      uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: Build Docker image
       run: docker build --tag sample-flask-1 .
 
@@ -20,11 +25,10 @@ jobs:
       run: docker tag sample-flask-1 testcontainerregistry4ss.azurecr.io/sample-flask-1:latest
 
     - name: Login to Azure Container Registry
-      uses: azure/docker-login@v1
-      with:
-        login-server: testcontainerregistry4ss
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
+      run: docker login testcontainerregistry4ss.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
 
     - name: Push Docker image to Azure Container Registry
       run: docker push testcontainerregistry4ss.azurecr.io/sample-flask-1:latest
+    
+    - name: Deploy to Azure Web App
+      run: az webapp config container set --resource-group 4ss-products-test-rg --name dynops-a-service-test --docker-custom-image-name testcontainerregistry4ss.azurecr.io/sample-flask-1:latest --docker-registry-server-url https://testcontainerregistry4ss.azurecr.io --docker-registry-server-user ${{ secrets.ACR_USERNAME }} --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
