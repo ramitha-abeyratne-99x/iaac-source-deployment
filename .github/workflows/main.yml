@@ -23,4 +23,4 @@ jobs:
       run: docker login testcontainerregistry4ss.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
 
     - name: Push Docker image to Azure Container Registry
-      run: docker push testcontainerregistry4ss.azurecr.io/dynopsbackend:latest
+      run: docker push testcontainerregistry4ss.azurecr.io/sample-flask-1:latest
