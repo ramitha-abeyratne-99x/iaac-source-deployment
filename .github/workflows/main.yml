@@ -32,3 +32,6 @@ jobs:
     
     - name: Deploy to Azure Web App
       run: az webapp config container set --resource-group 4ss-products-test-rg --name dynops-a-service-test --docker-custom-image-name testcontainerregistry4ss.azurecr.io/sample-flask-1:latest --docker-registry-server-url https://testcontainerregistry4ss.azurecr.io --docker-registry-server-user ${{ secrets.ACR_USERNAME }} --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
+
+    - name: Restart Azure Web App
+      run: az webapp restart --resource-group 4ss-products-test-rg --name dynops-a-service-test
